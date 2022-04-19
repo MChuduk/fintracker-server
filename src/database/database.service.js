@@ -10,6 +10,7 @@ class DatabaseService {
       host: config.DB_HOST,
       port: config.DB_PORT,
       database: config.DB_NAME,
+      logging: false,
     });
   }
 }

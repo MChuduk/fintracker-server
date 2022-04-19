@@ -1,5 +1,6 @@
 const usersService = require('../users/users.service');
 const utilsService = require('../utils/utils.service');
+const jwtService = require('../jwt/jwt.service');
 
 class AuthService {
   async signUpUser(email, password) {
@@ -24,6 +25,11 @@ class AuthService {
     if (!isValidPassword) {
       throw new Error(`wrong password for user ${email}`);
     }
+    const accessToken = jwtService.generateToken(candidate);
+    return {
+      type: 'success',
+      token: accessToken,
+    };
   }
 }
 

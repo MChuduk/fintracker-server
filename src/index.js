@@ -16,7 +16,6 @@ async function bootstrap() {
 async function connectDatabase() {
   const dbContext = dbService.getContext();
   await dbContext.authenticate();
-  await dbContext.sync();
 }
 
 function createServer(app) {

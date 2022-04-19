@@ -21,7 +21,7 @@ class UtilsService {
         res.send(result);
       } catch (error) {
         console.log(error.message);
-        res.send({
+        res.status(400).send({
           type: 'error',
           message: error.message,
         });

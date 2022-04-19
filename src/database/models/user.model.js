@@ -20,4 +20,6 @@ const model = User.init({
   timestamps: false,
 });
 
+model.sync();
+
 module.exports = model;

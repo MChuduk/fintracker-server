@@ -1,5 +1,5 @@
 const {QueryTypes} = require('sequelize');
-const User = require('./models/user.model');
+const User = require('../database/models/user.model');
 const dbService = require('../database/database.service');
 
 class UsersService {

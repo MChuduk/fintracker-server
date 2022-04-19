@@ -1,6 +1,8 @@
 const config = require('./config');
 const express = require('express');
 const dbService = require('./database/database.service');
+const adminJsService = require('./adminjs/adminjs.service');
+const adminJsRouter = require('./adminjs/adminjs.router');
 const authRouter = require('./auth/auth.router');
 
 async function bootstrap() {
@@ -24,6 +26,7 @@ function createServer(app) {
 
 function bindRoutes(app) {
   app.use(express.json());
+  app.use(adminJsService.options.rootPath, adminJsRouter);
   app.use('/api', authRouter);
 }
 

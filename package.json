@@ -1,0 +1,28 @@
+{
+  "name": "fintracker-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:dev": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MChuduk/fintracker-server.git"
+  },
+  "author": "mchuduk",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MChuduk/fintracker-server/issues"
+  },
+  "homepage": "https://github.com/MChuduk/fintracker-server#readme",
+  "devDependencies": {
+    "eslint": "^8.13.0",
+    "eslint-config-google": "^0.14.0",
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3"
+  }
+}

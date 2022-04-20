@@ -9,6 +9,10 @@ class JwtService {
     };
     return jwt.sign(payload, config.JWT_SECRET, {expiresIn: '24h'});
   }
+
+  verify(token) {
+    return jwt.verify(token, config.JWT_SECRET);
+  }
 }
 
 module.exports = new JwtService();

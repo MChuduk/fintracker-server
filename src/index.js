@@ -4,6 +4,7 @@ const dbService = require('./database/database.service');
 const adminJsService = require('./adminjs/adminjs.service');
 const adminJsRouter = require('./adminjs/adminjs.router');
 const authRouter = require('./auth/auth.router');
+const authMiddleware = require('./auth/auth.middleware');
 
 async function bootstrap() {
   const app = express();

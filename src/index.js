@@ -1,22 +1,25 @@
 const config = require('./config');
 const express = require('express');
-const dbService = require('./database/database.service');
-const adminJsService = require('./adminjs/adminjs.service');
 const adminJsRouter = require('./adminjs/adminjs.router');
 const authRouter = require('./auth/auth.router');
-const authMiddleware = require('./auth/auth.middleware');
+const currencyRouter = require('./currency/currency.router');
+const dbService = require('./database/database.service');
+const currencyService = require('./currency/currency.service');
+const adminJsService = require('./adminjs/adminjs.service');
 
 async function bootstrap() {
-  const app = express();
+  await connectDatabase();
 
+  const app = express();
   createServer(app);
   bindRoutes(app);
-  await connectDatabase();
 }
 
 async function connectDatabase() {
   const dbContext = dbService.getContext();
   await dbContext.authenticate();
+  await currencyService.insertProcedures();
+  await currencyService.insertInitData();
 }
 
 function createServer(app) {
@@ -25,9 +28,11 @@ function createServer(app) {
 }
 
 function bindRoutes(app) {
+  const prefix = '/api';
   app.use(express.json());
   app.use(adminJsService.options.rootPath, adminJsRouter);
-  app.use('/api', authRouter);
+  app.use(prefix, authRouter);
+  app.use(prefix, currencyRouter);
 }
 
 bootstrap();

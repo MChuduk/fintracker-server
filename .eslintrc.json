@@ -12,6 +12,7 @@
     },
     "rules": {
         "require-jsdoc": "off",
-        "new-cap": "off"
+        "new-cap": "off",
+        "max-len": "off"
     }
 }

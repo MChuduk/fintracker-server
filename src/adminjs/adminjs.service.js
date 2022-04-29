@@ -2,6 +2,7 @@ const AdminJsService = require('adminjs');
 const AdminJSSequelize = require('@adminjs/sequelize');
 const databaseService = require('./../database/database.service');
 const User = require('../database/models/user.model');
+const Currency = require('../database/models/currency.model');
 
 AdminJsService.registerAdapter(AdminJSSequelize);
 
@@ -11,14 +12,5 @@ module.exports = new AdminJsService({
   branding: {
     companyName: 'fintracker-admin',
   },
-  resources: [{
-    resource: User,
-    options: {
-      properties: {
-        id: {position: 1},
-        email: {position: 2},
-        password: {position: 3},
-      },
-    },
-  }],
+  resources: [User, Currency],
 });

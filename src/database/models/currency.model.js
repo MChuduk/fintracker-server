@@ -1,22 +1,22 @@
-const {DataTypes, Model} = require('sequelize');
+const {DataTypes, Model, QueryTypes} = require('sequelize');
 const dbService = require('../database.service');
 
-class User extends Model {}
+class Currency extends Model {}
 
-const model = User.init({
+const model = Currency.init({
   id: {
     type: DataTypes.INTEGER, primaryKey: true, unique: true,
     autoIncrement: true,
   },
-  email: {
+  name: {
     type: DataTypes.STRING, unique: true, allowNull: false,
   },
-  password: {
-    type: DataTypes.STRING, allowNull: false,
+  exchange_rate: {
+    type: DataTypes.DECIMAL, allowNull: false, defaultValue: 0,
   },
 }, {
   sequelize: dbService.getContext(),
-  tableName: 'users',
+  tableName: 'currency',
   timestamps: false,
 });
 

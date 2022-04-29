@@ -4,16 +4,16 @@ const jwtService = require('../jwt/jwt.service');
 
 class AuthService {
   async signUpUser(email, password) {
-    const candidate = await usersService.findUser(email);
+    const candidate = await usersService.findOne(email);
     if (candidate) {
       throw new Error(`user with email ${email} already exists`);
     }
     const hashPassword = await utilsService.scryptHash(password);
-    return await usersService.createUser(email, hashPassword);
+    return await usersService.create(email, hashPassword);
   }
 
   async signInUser(email, password) {
-    const candidate = await usersService.findUser(email);
+    const candidate = await usersService.findOne(email);
     if (!candidate) {
       throw new Error(`user with email ${email} not found`);
     }
@@ -28,6 +28,7 @@ class AuthService {
     const accessToken = jwtService.generateToken(candidate);
     return {
       type: 'success',
+      id: candidate.id,
       token: accessToken,
     };
   }

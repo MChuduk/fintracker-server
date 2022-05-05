@@ -1,4 +1,4 @@
-const {DataTypes, Model, QueryTypes} = require('sequelize');
+const {DataTypes, Model} = require('sequelize');
 const dbService = require('../database.service');
 
 class Currency extends Model {}
@@ -12,7 +12,7 @@ const model = Currency.init({
     type: DataTypes.STRING, unique: true, allowNull: false,
   },
   exchange_rate: {
-    type: DataTypes.DECIMAL, allowNull: false, defaultValue: 0,
+    type: DataTypes.FLOAT, allowNull: false, defaultValue: 0,
   },
 }, {
   sequelize: dbService.getContext(),

@@ -18,7 +18,7 @@ class UsersService {
 
   async findOne(email) {
     const [user] = await this.dbContext.query(
-        'SELECT id, email, password FROM get_user($1); ', {
+        'SELECT id, email, password FROM get_all_users() WHERE email = $1; ', {
           bind: [email],
           model: User,
           mapToModel: true,
@@ -35,9 +35,9 @@ class UsersService {
       type: QueryTypes.RAW,
     });
 
-    await this.dbContext.query('CREATE OR REPLACE FUNCTION get_user ' +
-          '(email TEXT) RETURNS TABLE (id INTEGER, email TEXT, password TEXT) LANGUAGE SQL AS $$ ' +
-          'SELECT id, email, password FROM users WHERE users.email =  email; ' +
+    await this.dbContext.query('CREATE OR REPLACE FUNCTION get_all_users ' +
+          '() RETURNS TABLE (id INTEGER, email TEXT, password TEXT) LANGUAGE SQL AS $$ ' +
+          'SELECT id, email, password FROM users; ' +
           '$$;', {
       type: QueryTypes.RAW,
     });

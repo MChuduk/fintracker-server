@@ -50,7 +50,7 @@ class CurrencyService {
     });
 
     await this.dbContext.query('CREATE OR REPLACE FUNCTION get_all_currency ' +
-          '() RETURNS TABLE (id INTEGER, name TEXT, exchange_rate DECIMAL) LANGUAGE SQL AS $$ ' +
+          '() RETURNS TABLE (id INTEGER, name TEXT, exchange_rate FLOAT) LANGUAGE SQL AS $$ ' +
           'SELECT id, name, exchange_rate FROM currency ' +
           '$$;', {
       type: QueryTypes.RAW,

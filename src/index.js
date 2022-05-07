@@ -6,6 +6,7 @@ const currencyRouter = require('./currency/currency.router');
 const walletsRouter = require('./wallets/wallets.router');
 const snapshotsRouter = require('./snapshots/snapshots.router');
 const transactionCategoriesRouter = require('./transaction-categories/transaction-categories.router');
+const transactionsRouter = require('./transactions/transaction.router');
 const dbService = require('./database/database.service');
 const usersService = require('./users/users.service');
 const currencyService = require('./currency/currency.service');
@@ -14,6 +15,7 @@ const walletsService = require('./wallets/wallets.service');
 const snapshotsService = require('./snapshots/snapshots.service');
 const transactionCategoriesService = require('./transaction-categories/transaction-categories.service');
 const transactionTypesService = require('./transaction-types/transaction-types.service');
+const transactionsService = require('./transactions/transaction.service');
 const authMiddleware = require('./auth/auth.middleware');
 
 async function bootstrap() {
@@ -34,6 +36,7 @@ async function connectDatabase() {
   await walletsService.insertProcedures();
   await transactionCategoriesService.insertProcedures();
   await transactionTypesService.insertProcedures();
+  await transactionsService.insertProcedures();
 
   await currencyService.insertInitData();
   await transactionTypesService.insertInitData();
@@ -53,6 +56,7 @@ function bindRoutes(app) {
   app.use(prefix, authMiddleware, snapshotsRouter);
   app.use(prefix, authMiddleware, walletsRouter);
   app.use(prefix, authMiddleware, transactionCategoriesRouter);
+  app.use(prefix, authMiddleware, transactionsRouter);
 }
 
 bootstrap();

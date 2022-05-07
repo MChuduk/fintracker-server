@@ -7,6 +7,7 @@ const Wallet = require('../database/models/wallet.model');
 const Snapshot = require('../database/models/snapshot.model');
 const TransactionCategory = require('../database/models/transaction-category.model');
 const TransactionType = require('../database/models/transaction-type.model');
+const Transaction = require('../database/models/transaction.model');
 
 AdminJsService.registerAdapter(AdminJSSequelize);
 
@@ -16,5 +17,5 @@ module.exports = new AdminJsService({
   branding: {
     companyName: 'fintracker-admin',
   },
-  resources: [User, Currency, Wallet, Snapshot, TransactionCategory, TransactionType],
+  resources: [User, Currency, Wallet, Snapshot, TransactionCategory, TransactionType, Transaction],
 });

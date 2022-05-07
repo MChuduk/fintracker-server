@@ -7,6 +7,12 @@ class WalletsController {
     const result = await walletsService.create(id, row_id, name, currency_id);
     res.json(result);
   }
+
+  async getAll(req, res) {
+    const {snapshot_id} = req.body;
+    const result = await walletsService.getAll(snapshot_id);
+    res.json(result);
+  }
 }
 
 module.exports = new WalletsController();

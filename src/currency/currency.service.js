@@ -37,7 +37,8 @@ class CurrencyService {
 
   async insertInitData() {
     await this.create('BYN', 3.6);
-    await this.create('EUR', 1.05);
+    await this.create('EUR', 1.25);
+    await this.create('USD', 1.0);
   }
 
   async insertProcedures() {

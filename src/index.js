@@ -13,6 +13,7 @@ const adminJsService = require('./adminjs/adminjs.service');
 const walletsService = require('./wallets/wallets.service');
 const snapshotsService = require('./snapshots/snapshots.service');
 const transactionCategoriesService = require('./transaction-categories/transaction-categories.service');
+const transactionTypesService = require('./transaction-types/transaction-types.service');
 const authMiddleware = require('./auth/auth.middleware');
 
 async function bootstrap() {
@@ -32,8 +33,10 @@ async function connectDatabase() {
   await snapshotsService.insertProcedures();
   await walletsService.insertProcedures();
   await transactionCategoriesService.insertProcedures();
+  await transactionTypesService.insertProcedures();
 
   await currencyService.insertInitData();
+  await transactionTypesService.insertInitData();
 }
 
 function createServer(app) {

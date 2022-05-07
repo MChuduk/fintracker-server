@@ -3,11 +3,13 @@ const express = require('express');
 const adminJsRouter = require('./adminjs/adminjs.router');
 const authRouter = require('./auth/auth.router');
 const currencyRouter = require('./currency/currency.router');
+const walletsRouter = require('./wallets/wallets.router');
 const snapshotsRouter = require('./snapshots/snapshots.router');
 const dbService = require('./database/database.service');
 const usersService = require('./users/users.service');
 const currencyService = require('./currency/currency.service');
 const adminJsService = require('./adminjs/adminjs.service');
+const walletsService = require('./wallets/wallets.service');
 const snapshotsService = require('./snapshots/snapshots.service');
 const authMiddleware = require('./auth/auth.middleware');
 
@@ -26,6 +28,7 @@ async function connectDatabase() {
   await usersService.insertProcedures();
   await currencyService.insertProcedures();
   await snapshotsService.insertProcedures();
+  await walletsService.insertProcedures();
 
   await currencyService.insertInitData();
 }
@@ -42,6 +45,7 @@ function bindRoutes(app) {
   app.use(prefix, authRouter);
   app.use(prefix, currencyRouter);
   app.use(prefix, authMiddleware, snapshotsRouter);
+  app.use(prefix, authMiddleware, walletsRouter);
 }
 
 bootstrap();

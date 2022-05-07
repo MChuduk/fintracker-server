@@ -8,18 +8,20 @@ class SnapshotsService {
   }
 
   async create(userId) {
-    await this.dbContext.query(
-        'CALL create_snapshot($1);', {
-          bind: [userId],
-          type: QueryTypes.INSERT,
+    const id = -1;
+    const [result] = await this.dbContext.query(
+        'CALL create_snapshot(:userId, :id);', {
+          replacements: {userId, id},
+          type: QueryTypes.SELECT,
+          raw: true,
         });
-    return await this.findOne(userId);
+    return await this.getOne(result.id);
   }
 
-  async findOne(userId) {
+  async getOne(id) {
     const [snapshot] = await this.dbContext.query(
-        'SELECT id, user_id, created_at FROM get_all_snapshots() WHERE user_id = $1; ', {
-          bind: [userId],
+        'SELECT id, user_id, created_at FROM get_all_snapshots() WHERE id = $1; ', {
+          bind: [id],
           model: Snapshot,
           mapToModel: true,
           type: QueryTypes.SELECT,
@@ -27,17 +29,44 @@ class SnapshotsService {
     return snapshot;
   }
 
+  async getAll(userId) {
+    return await this.dbContext.query(
+        'SELECT id, user_id, created_at FROM get_all_snapshots() WHERE user_id = $1; ', {
+          bind: [userId],
+          model: Snapshot,
+          mapToModel: true,
+          type: QueryTypes.SELECT,
+        });
+  }
+
+  async delete(id) {
+    const snapshot = await this.getOne(id);
+    await this.dbContext.query(
+        'CALL delete_snapshot($1);', {
+          bind: [id],
+          type: QueryTypes.RAW,
+        });
+    return snapshot;
+  }
+
   async insertProcedures() {
     await this.dbContext.query('CREATE OR REPLACE PROCEDURE create_snapshot ' +
-        '(user_id INTEGER) LANGUAGE SQL AS $$ ' +
-        'INSERT INTO snapshots (user_id, created_at) VALUES (user_id, DEFAULT) ' +
+        '(user_id INTEGER, INOUT id INTEGER) LANGUAGE SQL AS $$ ' +
+        'INSERT INTO snapshots (user_id, created_at) VALUES (user_id, DEFAULT) RETURNING id' +
         '$$;', {
+      type: QueryTypes.RAW,
+    });
+
+    await this.dbContext.query('CREATE OR REPLACE PROCEDURE delete_snapshot ' +
+          '(id_in INTEGER) LANGUAGE SQL AS $$ ' +
+          'DELETE FROM snapshots WHERE id = id_in ' +
+          '$$;', {
       type: QueryTypes.RAW,
     });
 
     await this.dbContext.query('CREATE OR REPLACE FUNCTION get_all_snapshots ' +
           '() RETURNS TABLE (id INTEGER, user_id INTEGER, created_at TEXT) LANGUAGE SQL AS $$ ' +
-          'SELECT id, user_id, created_at FROM snapshots ' +
+          'SELECT id, user_id, created_at FROM snapshots ORDER BY created_at DESC' +
           '$$;', {
       type: QueryTypes.RAW,
     });

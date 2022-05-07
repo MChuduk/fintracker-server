@@ -30,14 +30,14 @@ class WalletsService {
   }
 
   async getOne(id) {
-    const [snapshot] = await this.dbContext.query(
+    const [wallet] = await this.dbContext.query(
         'SELECT row_id, name, currency_id, snapshot_id, id FROM get_all_wallets() WHERE id = $1; ', {
           bind: [id],
           model: Wallet,
           mapToModel: true,
           type: QueryTypes.SELECT,
         });
-    return snapshot;
+    return wallet;
   }
 
   async insertProcedures() {

@@ -28,8 +28,8 @@ const model = Wallet.init({
   timestamps: false,
 });
 
-model.belongsTo(Snapshot, {foreignKey: 'snapshot_id'});
-model.belongsTo(Currency, {foreignKey: 'currency_id'});
+model.belongsTo(Snapshot, {foreignKey: 'snapshot_id', onDelete: 'cascade'});
+model.belongsTo(Currency, {foreignKey: 'currency_id', onDelete: 'cascade'});
 
 model.sync({alter: true});
 

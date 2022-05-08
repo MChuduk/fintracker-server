@@ -52,7 +52,7 @@ class SnapshotsService {
   async insertProcedures() {
     await this.dbContext.query('CREATE OR REPLACE PROCEDURE create_snapshot ' +
         '(user_id INTEGER, INOUT id INTEGER) LANGUAGE SQL AS $$ ' +
-        'INSERT INTO snapshots (user_id, created_at) VALUES (user_id, DEFAULT) RETURNING id' +
+        'INSERT INTO snapshots (user_id, created_at) VALUES (user_id, now()) RETURNING id' +
         '$$;', {
       type: QueryTypes.RAW,
     });

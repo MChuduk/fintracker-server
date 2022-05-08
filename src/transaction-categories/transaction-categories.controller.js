@@ -9,7 +9,7 @@ class TransactionCategoriesController {
   }
 
   async getAll(req, res) {
-    const {snapshot_id} = req.body;
+    const {snapshot_id} = req.query;
     const result = await transactionCategoriesService.getAll(snapshot_id);
     res.json(result);
   }

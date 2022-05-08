@@ -43,8 +43,8 @@ const model = Transaction.init({
   timestamps: false,
 });
 
-model.belongsTo(TransactionTypes, {foreignKey: 'type_id'});
-model.belongsTo(Snapshot, {foreignKey: 'snapshot_id'});
+model.belongsTo(TransactionTypes, {foreignKey: 'type_id', onDelete: 'cascade'});
+model.belongsTo(Snapshot, {foreignKey: 'snapshot_id', onDelete: 'cascade'});
 
 model.sync({alter: true});
 

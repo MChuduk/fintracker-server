@@ -13,7 +13,7 @@ const model = Snapshot.init({
     type: DataTypes.INTEGER, allowNull: false,
   },
   created_at: {
-    type: DataTypes.DATE, allowNull: false, defaultValue: new Date(),
+    type: DataTypes.DATE, allowNull: false,
   },
 }, {
   sequelize: dbService.getContext(),

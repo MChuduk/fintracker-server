@@ -1,5 +1,6 @@
 const config = require('./config');
 const express = require('express');
+const cron = require('node-cron');
 const adminJsRouter = require('./adminjs/adminjs.router');
 const authRouter = require('./auth/auth.router');
 const currencyRouter = require('./currency/currency.router');
@@ -38,7 +39,9 @@ async function connectDatabase() {
   await transactionTypesService.insertProcedures();
   await transactionsService.insertProcedures();
 
-  await currencyService.insertInitData();
+  currencyService.updateExchangeRates();
+  cron.schedule('0 * * * *', () => currencyService.updateExchangeRates());
+
   await transactionTypesService.insertInitData();
 }
 

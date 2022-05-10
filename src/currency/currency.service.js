@@ -1,3 +1,4 @@
+const axios = require('axios');
 const dbService = require('../database/database.service');
 const Currency = require('../database/models/currency.model');
 const {QueryTypes} = require('sequelize');
@@ -35,10 +36,20 @@ class CurrencyService {
     return currency;
   }
 
-  async insertInitData() {
-    await this.create('BYN', 3.6);
-    await this.create('EUR', 1.25);
-    await this.create('USD', 1.0);
+  async updateExchangeRates() {
+    const response = await axios.get('https://belarusbank.by/api/kursExchange')
+        .catch((error) => {
+          console.log(error);
+        });
+    const [data] = response.data;
+    if (data) {
+      const BYN = 1;
+      const EUR = data.EUR_out;
+      const USD = data.USD_out;
+      await this.create('BYN', BYN);
+      await this.create('EUR', EUR);
+      await this.create('USD', USD);
+    }
   }
 
   async insertProcedures() {

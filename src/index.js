@@ -31,6 +31,8 @@ async function connectDatabase() {
   const dbContext = dbService.getContext();
   await dbContext.authenticate();
 
+  await adminJsService.insertInitialData();
+
   await usersService.insertProcedures();
   await currencyService.insertProcedures();
   await snapshotsService.insertProcedures();

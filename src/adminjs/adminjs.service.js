@@ -19,7 +19,81 @@ const service = new AdminJsService({
   branding: {
     companyName: 'fintracker-admin',
   },
-  resources: [User, Currency, Wallet, Snapshot, TransactionCategory, TransactionType, Transaction],
+  resources: [{
+    resource: User,
+    options: {
+      properties: {
+        id: {position: 1},
+        email: {position: 2},
+      },
+    },
+  },
+  {
+    resource: Currency,
+    options: {
+      properties: {
+        id: {position: 1},
+        name: {position: 2},
+        exchange_rate: {position: 3},
+      },
+    },
+  },
+  {
+    resource: Wallet,
+    options: {
+      properties: {
+        id: {position: 1},
+        row_id: {position: 2},
+        name: {position: 3},
+        currency_id: {position: 4},
+        snapshot_id: {position: 5},
+      },
+    },
+  },
+  {
+    resource: Snapshot,
+    options: {
+      properties: {
+        id: {position: 1},
+        user_id: {position: 2},
+        created_at: {position: 3},
+      },
+    },
+  }, {
+    resource: TransactionCategory,
+    options: {
+      properties: {
+        id: {position: 1},
+        row_id: {position: 2},
+        name: {position: 3},
+        snapshot_id: {position: 4},
+      },
+    },
+  },
+  {
+    resource: TransactionType,
+    options: {
+      properties: {
+        id: {position: 1},
+        name: {position: 2},
+      },
+    },
+  },
+  {
+    resource: Transaction,
+    options: {
+      properties: {
+        id: {position: 1},
+        row_id: {position: 2},
+        wallet_id: {position: 3},
+        category_id: {position: 4},
+        note: {position: 5},
+        amount: {position: 6},
+        date: {position: 7},
+        snapshot_id: {position: 8},
+      },
+    },
+  }],
 });
 
 service.insertInitialData = async () => {
